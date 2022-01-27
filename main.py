@@ -182,9 +182,7 @@ def add_cookies(driver, name_cookies):
     driver.refresh()
 
 
-#main > div > table.siteheader > tbody > tr:nth-child(1) > td:nth-child(4) > a > div
 def SEO_bot(urls):
-    # agent = "user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
     agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:95.0) Gecko/20100101 Firefox/95.0'
     optins = Options()
     optins.headless = True
