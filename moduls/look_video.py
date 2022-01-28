@@ -9,8 +9,7 @@ def look_video(driver, action, By):
     steps = 11
     link_id = 2
     scroll = 800
-    count_bad = 0
-    count_window = 1
+    count_bad = visit_complite = 0
     count_sleep = randint(40, 80)
     try:
         menu_links = driver.find_element(By.ID, 'menu_icon')
@@ -33,7 +32,7 @@ def look_video(driver, action, By):
             driver.switch_to.window(driver.window_handles[0])
 
             sleep(.2)
-            print(link_id // 4)
+            print(visit_complite)
 
             if link_id // 4 == 3500:
                 print('Finish')
@@ -43,22 +42,16 @@ def look_video(driver, action, By):
                 scroll += 550
                 driver.execute_script(f'window.scrollTo(0, {scroll})')
                 driver.get_screenshot_as_file('test positions.png')
-#   Speed X2
-            if len(driver.window_handles) >= 4:
-                for num_window in range(1, len(driver.window_handles)):
-                    driver.switch_to.window(driver.window_handles[num_window])
-                    if wait.until_not(ECi.visibility_of_element_located(
-                            (driver.find_element(By.XPATH, ' html / body / table / tbody / tr[2] / td / iframe')))):
-                        count_window -= 1
-                        driver.close
+
 #   Sleep
-            if link_id // count_sleep:
+            if link_id == count_sleep:
+                count_sleep *= 2
                 sleep(10)
             try:
                 youtube_link = list_tr[count_link].find_elements(By.CLASS_NAME, 'surf_ckick')
                 action.click(youtube_link[1]).perform()
                 sleep(1.5)
-                driver.switch_to.window(driver.window_handles[count_window])
+                driver.switch_to.window(driver.window_handles[1])
             except:
                 count_bad += 1
                 print('Error ID_link ', count_bad)
@@ -79,11 +72,12 @@ def look_video(driver, action, By):
 
                 sleep(1)
                 driver.close()
+                visit_complite += 1
             except:
                 count_bad += 1
                 print('Problem in play ', count_bad)
                 driver.close()
-            count_window += 1
+
 
 # play video end
     except EOFError as er:
