@@ -70,7 +70,6 @@ def look_video(driver, action, By):
                 capcha_blok = driver.find_element(By.ID, 'capcha-tr-block')
                 wait.until(ECi.visibility_of(capcha_blok))
 
-                sleep(1)
                 driver.close()
                 visit_complite += 1
             except:
