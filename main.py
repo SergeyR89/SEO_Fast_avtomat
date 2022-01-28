@@ -1,6 +1,6 @@
 from time import sleep
 import pickle
-
+from moduls import look_video
 
 
 from selenium import webdriver
@@ -31,130 +31,6 @@ def resole_capcha(driver, action):
         checkout = capcha_blok.find_element(By.CLASS_NAME, 'sf_button')
         action.click(checkout).perform()
 
-
-def looks_yotube(driver, action, By):
-    wait = WebDriverWait(driver, 600)
-    steps = 11
-    link_id = 2
-    scroll = 800
-    count_bad = 0
-    try:
-        # driver.get_screenshot_as_file('avtorizovan.png')
-        menu_links = driver.find_element(By.ID, 'menu_icon')
-        links_item = menu_links.find_elements(By.ID, 'ajax_load')
-        # for link in links_item:
-        #     print(link.rect)
-        # action.move_by_offset(139, 423).click().perform()
-        action.click(links_item[7]).perform()
-
-        if not wait.until_not(ECi.visibility_of_element_located((By.ID, 'window_popup_y'))):
-            popup = driver.find_element(By.ID, 'window_popup_y')
-            text_ok = popup.find_element(By.CLASS_NAME, 'sf_button')
-            sleep(.5)
-            action.click(text_ok).perform()
-            sleep(.5)
-
-        nav_youtube = wait.until(ECi.visibility_of_element_located((By.CLASS_NAME, 'm_stc')))
-        looke_video = nav_youtube.find_elements(By.ID, 'ajax_load')[0]
-        action.click(looke_video).perform()
-# start while
-
-        # link_id += 4
-        # steps -= 1
-        # driver.switch_to.window(driver.window_handles[0])
-        #
-        # if not wait.until_not(ECi.visibility_of_element_located((By.ID, 'capcha'))):
-        #     driver.maximize_window()
-        #     driver.execute_script(f'window.scrollTo(0, {scroll})')
-        #
-        # sleep(.2)
-        # print(link_id // 4)
-        # # driver.execute_script(f'window.scrollTo(0, {scroll + 100})')
-        # if link_id // 4 == 3500:
-        #     print('Finish')
-        #     break
-        # if not steps:
-        #     steps = 10
-        #     scroll += 550
-        #     driver.execute_script(f'window.scrollTo(0, {scroll})')
-        #     driver.get_screenshot_as_file('test positions.png')
-
-
-        blok_links_youtube = wait.until(ECi.visibility_of_element_located((By.CLASS_NAME, 'list_rek_table')))
-        print('Start')
-        list_tr = blok_links_youtube.find_elements(By.TAG_NAME, 'tr')
-        driver.execute_script(f'window.scrollTo(0, {scroll})')
-
-        # blok_links_youtube = wait.until(ECi.visibility_of_element_located((By.CLASS_NAME, 'list_rek_table')))
-        # youtube_link = blok_links_youtube.find_element(By.XPATH, f'tbody / tr[{link_id}] / td[2] / div / a')
-        # action.click(youtube_link).perform()
-
-        for count_link in range(1, 5000, 4):
-            link_id += 4
-            steps -= 1
-            driver.switch_to.window(driver.window_handles[0])
-
-            if not wait.until_not(ECi.visibility_of_element_located((By.ID, 'capcha'))):
-                resole_capcha(driver, action)
-            #     print('Capcha!!!')
-            #     driver.execute_script(f'window.scrollTo(0, {scroll})')
-            #     pots = input('Number/s pots? ')
-            #     list_posts = pots.split(',')
-            #     capcha_blok = driver.find_element(By.ID, 'capcha')
-            #     capcha_items = capcha_blok.find_elements(By.TAG_NAME, 'label')
-            #     for index in range(0, 6):
-            #         if str(index) in list_posts:
-            #             action.click(capcha_items[index]).perform()
-            #     checkout = capcha_blok.find_element(By.CLASS_NAME, 'sf_button')
-            #     action.click(checkout).perform()
-
-            sleep(.2)
-            print(link_id // 4)
-
-            if link_id // 4 == 3500:
-                print('Finish')
-                break
-            if not steps:
-                steps = 10
-                scroll += 550
-                driver.execute_script(f'window.scrollTo(0, {scroll})')
-                driver.get_screenshot_as_file('test positions.png')
-
-            try:
-                youtube_link = list_tr[count_link].find_elements(By.CLASS_NAME, 'surf_ckick')
-                action.click(youtube_link[1]).perform()
-                sleep(1.5)
-                driver.switch_to.window(driver.window_handles[1])
-            except:
-                count_bad += 1
-                print('Error ID_link ', count_bad)
-                continue
-
-# play video start
-            sleep(2.5)
-            try:
-                frame = driver.find_element(By.XPATH, ' html / body / table / tbody / tr[2] / td / iframe')
-                driver.switch_to.frame(frame)
-                play_btn = driver.find_element(By.CLASS_NAME, 'ytp-large-play-button')
-
-                action.click(play_btn).perform()
-                driver.switch_to.default_content()
-
-                capcha_blok = driver.find_element(By.ID, 'capcha-tr-block')
-                wait.until(ECi.visibility_of(capcha_blok))
-
-                sleep(1)
-                driver.close()
-            except:
-                count_bad += 1
-                print('Problem in play ', count_bad)
-                driver.close()
-
-# play video end
-    except EOFError as er:
-        print(er)
-    finally:
-        driver.quit()
 
 
 def avtoris_cookies(driver, action, By, name_cookies):
@@ -213,7 +89,7 @@ def SEO_bot(urls):
 
     sleep(1)
 
-    looks_yotube(driver, action, By)
+    look_video.look_video(driver, action, By)
 
 
 def main():
