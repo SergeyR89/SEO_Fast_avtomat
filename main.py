@@ -61,15 +61,15 @@ def add_cookies(driver, name_cookies):
 def SEO_bot(urls):
     agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:95.0) Gecko/20100101 Firefox/95.0'
     optins = Options()
-    # optins.headless = True
+    optins.headless = True
     optins.set_preference('dom.webdriver.enabled', False)
     optins.set_preference('media.volume_scale', '0.0')
     optins.set_preference('dom.ipc.processCount', 3)
     optins.set_preference('toolkit.cosmeticAnimations.enabled', False)
     optins.set_preference('general.useragent.override', agent)
-    optins.set_preference('browser.sessionstore.max_tabs_undo', 6)
+    optins.set_preference('browser.sessionstore.max_tabs_undo', 2)
     optins.set_preference('browser.sessionhistory.max_entries', 10)
-    optins.set_preference('browser.sessionhistory.max_total_viewers', 4)
+    optins.set_preference('browser.sessionhistory.max_total_viewers', 3)
     optins.set_preference('geo.enabled', False)
     optins.set_preference('network.prefetch-next', False)
     optins.set_preference('media.cache_size', 128000)

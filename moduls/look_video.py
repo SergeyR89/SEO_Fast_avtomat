@@ -9,7 +9,7 @@ def look_video(driver, action, By):
     steps = 11
     link_id = 2
     scroll = 800
-    count_bad = visit_complite = 0
+    error_id = visit_complite = 0
     count_sleep = randint(40, 80)
     try:
         menu_links = driver.find_element(By.ID, 'menu_icon')
@@ -37,6 +37,18 @@ def look_video(driver, action, By):
             if link_id // 4 == 3500:
                 print('Finish')
                 break
+
+            if error_id == 100:
+                print("REFRESH")
+                error_id = 0
+                scroll = 800
+                link_id = 2
+                steps = 11
+                count_sleep /= 2
+                driver.refresh()
+                sleep(4)
+                continue
+
             if not steps:
                 steps = 10
                 scroll += 550
@@ -45,6 +57,7 @@ def look_video(driver, action, By):
 
 #   Sleep
             if link_id == count_sleep:
+                print('sleep', count_sleep)
                 count_sleep *= 2
                 sleep(10)
             try:
@@ -53,8 +66,8 @@ def look_video(driver, action, By):
                 sleep(1.5)
                 driver.switch_to.window(driver.window_handles[1])
             except:
-                count_bad += 1
-                print('Error ID_link ', count_bad)
+                error_id += 1
+                print('Error ID_link ')
                 continue
 
             # play video start
@@ -73,8 +86,7 @@ def look_video(driver, action, By):
                 driver.close()
                 visit_complite += 1
             except:
-                count_bad += 1
-                print('Problem in play ', count_bad)
+                print('Problem in play ')
                 driver.close()
 
 
