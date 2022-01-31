@@ -91,8 +91,15 @@ def SEO_bot(urls):
     look_video.look_video(driver, action, By)
 
 
+def while_look_video():
+    for index in range(5):
+        SEO_bot(url)
+        print('Refresh Brouser')
+        sleep(15)
+
+
 def main():
-    SEO_bot(url)
+    while_look_video()
 
 
 if __name__ == '__main__':

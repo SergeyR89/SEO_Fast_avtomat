@@ -22,32 +22,24 @@ def look_video(driver, action, By):
         action.click(looke_video).perform()
 
         blok_links_youtube = wait.until(ECi.visibility_of_element_located((By.CLASS_NAME, 'list_rek_table')))
-        print('Start')
+
         list_tr = blok_links_youtube.find_elements(By.TAG_NAME, 'tr')
         driver.execute_script(f'window.scrollTo(0, {scroll})')
-
+        print('Start')
         for count_link in range(1, 5000, 4):
             link_id += 4
             steps -= 1
             driver.switch_to.window(driver.window_handles[0])
 
             sleep(.2)
-            print(visit_complite)
-
+            if not visit_complite % 50:
+                print(visit_complite)
             if link_id // 4 == 3500:
                 print('Finish')
                 break
 
             if error_id == 100:
-                print("REFRESH")
-                error_id = 0
-                scroll = 800
-                link_id = 2
-                steps = 11
-                count_sleep /= 2
-                driver.refresh()
-                sleep(4)
-                continue
+                break
 
             if not steps:
                 steps = 10
@@ -56,18 +48,22 @@ def look_video(driver, action, By):
                 driver.get_screenshot_as_file('test positions.png')
 
 #   Sleep
-            if link_id == count_sleep:
+            if visit_complite == count_sleep:
                 print('sleep', count_sleep)
                 count_sleep *= 2
                 sleep(10)
             try:
-                youtube_link = list_tr[count_link].find_elements(By.CLASS_NAME, 'surf_ckick')
-                action.click(youtube_link[1]).perform()
+                youtube_link = list_tr[count_link].find_elements(By.TAG_NAME, 'td')
+                total_visit = youtube_link[2].find_element(By.TAG_NAME, 'span').text
+                if int(total_visit[1:-1]) < 43:
+                    continue
+                link_click = youtube_link[1].find_elements(By.CLASS_NAME, 'surf_ckick')
+                action.click(link_click[1]).perform()
                 sleep(1.5)
                 driver.switch_to.window(driver.window_handles[1])
             except:
                 error_id += 1
-                print('Error ID_link ')
+                print('Error ID_link ', error_id)
                 continue
 
             # play video start
